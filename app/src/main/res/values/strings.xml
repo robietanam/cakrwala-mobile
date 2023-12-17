@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">CakrawalaBangkit</string>
+    <string name="title">Cakrawala</string>
+    <string name="title_desc">Temukan Ai</string>
+    <string name="nama_field">Enter your name</string>
+    <string name="email_field">Enter your email</string>
+    <string name="password_field">Enter your password</string>
+    <string name="no_account">Don\'t have an account?</string>
+    <string name="register">Register</string>
+    <string name="login">Login</string>
+
+    <string name="camera">Camera</string>
+    <string name="galery">Galery</string>
+    <string name="descHint">Description..</string>
+    <string name="submit">Submit</string>
+    <string name="file">File</string>
+    <string name="pickfile">PickFile</string>
+</resources>

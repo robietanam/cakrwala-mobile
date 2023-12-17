@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/History"
+        android:icon="@drawable/history"
+        android:title="History" />
+
+    <item
+
+        android:id="@+id/placeholder"
+        android:title="" />
+
+    <item
+        android:id="@+id/Settings"
+        android:icon="@drawable/settings"
+        android:title="Settings" />
+
+</menu>
