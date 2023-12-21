@@ -7,14 +7,15 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverter
 import androidx.room.TypeConverters
 import com.bangkit.cakrawala.data.response.HistoryResponseItem
+import com.bangkit.cakrawala.data.response.TransactionHistoryResponseItem
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.lang.reflect.Type
 
 
 @Database(
-    entities = [HistoryResponseItem::class, RemoteKeys::class],
-    version = 1,
+    entities = [HistoryResponseItem::class, RemoteKeys::class, TransactionHistoryResponseItem::class],
+    version = 4,
     exportSchema = false
 )
 @TypeConverters(ArrayListConverter::class)
@@ -22,6 +23,7 @@ abstract class CakrawalaDatabase : RoomDatabase() {
 
     abstract fun historyDao(): HistoryDao
     abstract fun remoteKeysDao(): RemoteKeysDao
+    abstract fun transactionDao(): TransactionDao
 
     companion object {
         @Volatile

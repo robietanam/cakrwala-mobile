@@ -55,7 +55,7 @@ class HistoryFragment : Fragment() {
     }
 
     private fun getData(){
-        viewModel.getPaging.observe(this){
+        viewModel.getPaging.observe(viewLifecycleOwner){
             binding.srlRefresh.isRefreshing = false;
             if (it != null){
                 setHistory(it)

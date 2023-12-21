@@ -1,18 +1,13 @@
 package com.bangkit.cakrawala.ui.detection.text
 
-import android.net.Uri
-import androidx.core.net.toFile
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.bangkit.cakrawala.data.repository.AuthRepository
-import com.bangkit.cakrawala.data.repository.HistoryRepository
 import com.bangkit.cakrawala.data.repository.TextDetectionRepository
-import com.bangkit.cakrawala.data.response.AuthStatus
+import com.bangkit.cakrawala.data.response.ResponseStatus
 import com.bangkit.cakrawala.data.response.UploadTextImageResponse
 import com.bangkit.cakrawala.data.response.UploadTextPdfResponse
 import com.bangkit.cakrawala.data.response.UploadTextResponse
-import com.bangkit.cakrawala.data.retrofit.ApiConfig
 import com.bangkit.cakrawala.utils.reduceFileImage
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
@@ -54,13 +49,13 @@ class TextDetectionViewModel(private val textDetectionRepository: TextDetectionR
                 if (response.isSuccessful) {
                     _responseText.value = response.body()
                 } else {
-                    _responseText.value = UploadTextResponse(status = AuthStatus.Error)
+                    _responseText.value = UploadTextResponse(status = ResponseStatus.Error)
                 }
             }
 
             override fun onFailure(call: retrofit2.Call<UploadTextResponse>, t: Throwable) {
                 _isLoading.value = false
-                _responseText.value = UploadTextResponse(status = AuthStatus.Error)
+                _responseText.value = UploadTextResponse(status = ResponseStatus.Error)
             }
         })
     }
@@ -83,13 +78,13 @@ class TextDetectionViewModel(private val textDetectionRepository: TextDetectionR
                 if (response.isSuccessful) {
                     _responseImage.value = response.body()
                 } else {
-                    _responseImage.value = UploadTextImageResponse(status = AuthStatus.Error)
+                    _responseImage.value = UploadTextImageResponse(status = ResponseStatus.Error)
                 }
             }
 
             override fun onFailure(call: retrofit2.Call<UploadTextImageResponse>, t: Throwable) {
                 _isLoading.value = false
-                _responseImage.value = UploadTextImageResponse(status = AuthStatus.Error)
+                _responseImage.value = UploadTextImageResponse(status = ResponseStatus.Error)
             }
         })
     }
@@ -114,13 +109,13 @@ class TextDetectionViewModel(private val textDetectionRepository: TextDetectionR
                 if (response.isSuccessful) {
                     _responsePdf.value = response.body()
                 } else {
-                    _responsePdf.value = UploadTextPdfResponse(status = AuthStatus.Error)
+                    _responsePdf.value = UploadTextPdfResponse(status = ResponseStatus.Error)
                 }
             }
 
             override fun onFailure(call: retrofit2.Call<UploadTextPdfResponse>, t: Throwable) {
                 _isLoading.value = false
-                _responsePdf.value = UploadTextPdfResponse(status = AuthStatus.Error)
+                _responsePdf.value = UploadTextPdfResponse(status = ResponseStatus.Error)
             }
         })
     }

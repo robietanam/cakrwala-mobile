@@ -24,9 +24,12 @@ data class Auth(
 
     @field:SerializedName("username")
     val userName: String? = null,
+
+    @field:SerializedName("premium")
+    val premium: Int? = null,
 )
 
-class AuthStatus {
+class ResponseStatus {
     companion object {
         const val SUCCESS = "Sukses"
         const val Error = "Error"

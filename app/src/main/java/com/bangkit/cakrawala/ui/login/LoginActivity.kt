@@ -7,19 +7,14 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
-import com.bangkit.cakrawala.R
-import com.bangkit.cakrawala.data.preferences.AuthPreferences
-import com.bangkit.cakrawala.data.preferences.dataStore
 import com.bangkit.cakrawala.data.response.Auth
-import com.bangkit.cakrawala.data.response.AuthStatus
+import com.bangkit.cakrawala.data.response.ResponseStatus
 import com.bangkit.cakrawala.databinding.ActivityLoginBinding
 import com.bangkit.cakrawala.ui.AuthViewModelFactory
 import com.bangkit.cakrawala.ui.common.TokenViewModel
 import com.bangkit.cakrawala.ui.components.ButtonWithLoadingCustom
 import com.bangkit.cakrawala.ui.home.HomeActivity
 import com.bangkit.cakrawala.ui.register.RegisterActivity
-import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
 
@@ -40,11 +35,12 @@ class LoginActivity : AppCompatActivity() {
 
         loginViewModel = ViewModelProvider(this, AuthViewModelFactory.getInstance(this))[LoginViewModel::class.java]
         loginViewModel.auth.observe(this){ it ->
-            if (it.status == AuthStatus.Error){
+            if (it.status == ResponseStatus.Error){
                 Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
             } else {
                 if (it.data != null){
-                    tokenViewModel.saveToken(it.data)
+                    val data = it.data
+                    tokenViewModel.saveToken(Auth(userName = data.userName, userId = data.userId, token = data.token, premium = data.premium))
 
                     tokenViewModel.getToken().observe(this){
                         if (it?.token != null){
@@ -59,6 +55,9 @@ class LoginActivity : AppCompatActivity() {
 
         checkIsNotEmpty()
 
+        loginViewModel.isLoading.observe(this){
+            setMyButtonLoading(it)
+        }
         binding.btnRegister.setOnClickListener {
             val intentDetail = Intent(this, RegisterActivity::class.java)
             startActivity(intentDetail)
@@ -86,6 +85,7 @@ class LoginActivity : AppCompatActivity() {
 
         myButton.setOnClickListener {
             if(checkIsNotEmpty()){
+
                 loginViewModel.login(email = binding.editTextCustom.text.toString(), password = binding.passwordEditTextCustom.text.toString())
             } else {
                 Toast.makeText(this, "Mohon Masukkan semua data dengan benar", Toast.LENGTH_SHORT).show()

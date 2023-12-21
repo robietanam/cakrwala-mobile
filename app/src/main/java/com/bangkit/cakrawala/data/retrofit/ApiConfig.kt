@@ -3,6 +3,7 @@ package com.bangkit.cakrawala.data.retrofit
 
 import android.content.Context
 import com.bangkit.cakrawala.utils.API_URL
+import com.bangkit.cakrawala.utils.SaveReceivedCookiesInterceptor
 import com.bangkit.cakrawala.utils.SendCookiesInterceptor
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -24,6 +25,7 @@ class ApiConfig {
                 .readTimeout(TIME_OUT, TimeUnit.SECONDS)
                 .addInterceptor(loggingInterceptor)
                 .addInterceptor(SendCookiesInterceptor(context))
+                .addInterceptor(SaveReceivedCookiesInterceptor(context))
                 .build()
             val retrofit = Retrofit.Builder()
                 .baseUrl(API_URL)

@@ -64,8 +64,6 @@ dependencies {
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     implementation("androidx.exifinterface:exifinterface:1.3.6")
 
-    implementation("com.midtrans:uikit:2.0.0-SANDBOX")
-
     implementation("androidx.paging:paging-runtime-ktx:3.1.0")
     implementation("androidx.room:room-paging:2.4.0-rc01")
     testImplementation("androidx.room:room-testing:2.4.0")

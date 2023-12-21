@@ -35,6 +35,8 @@ class HomeActivity : AppCompatActivity() {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
+
         val fragmentManager = supportFragmentManager
 
         val homeFragment = HomeFragment()
@@ -52,6 +54,18 @@ class HomeActivity : AppCompatActivity() {
 
         tokenViewModel = ViewModelProvider(this, AuthViewModelFactory.getInstance(this))[TokenViewModel::class.java]
 
+        val uri = intent.data;
+
+        if (uri != null) {
+
+            val parameters = uri.query
+            if (parameters != null) {
+                val newToken = parameters.split("jwt=")[1]
+                tokenViewModel.updateTokenToPremium(newToken)
+            }
+
+
+        }
 
         tokenViewModel.getToken().observe(this){
             if (it?.token != null){

@@ -7,8 +7,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
-import com.bangkit.cakrawala.R
-import com.bangkit.cakrawala.data.response.AuthStatus
+import com.bangkit.cakrawala.data.response.ResponseStatus
 import com.bangkit.cakrawala.databinding.ActivityRegisterBinding
 import com.bangkit.cakrawala.ui.AuthViewModelFactory
 import com.bangkit.cakrawala.ui.login.LoginActivity
@@ -25,7 +24,7 @@ class RegisterActivity : AppCompatActivity() {
 
         registerViewModel = ViewModelProvider(this, AuthViewModelFactory.getInstance(this))[RegisterViewModel::class.java]
         registerViewModel.auth.observe(this) {
-            if (it.status == AuthStatus.SUCCESS) {
+            if (it.status == ResponseStatus.SUCCESS) {
                 Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
                 finish()
             } else {

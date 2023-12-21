@@ -2,7 +2,10 @@ package com.bangkit.cakrawala.data.retrofit
 
 
 import com.bangkit.cakrawala.data.response.AuthResponse
+import com.bangkit.cakrawala.data.response.BuyPremiumResponse
 import com.bangkit.cakrawala.data.response.HistoryResponse
+import com.bangkit.cakrawala.data.response.PremiumResponse
+import com.bangkit.cakrawala.data.response.TransactionHistoryResponse
 import com.bangkit.cakrawala.data.response.UploadTextImageResponse
 import com.bangkit.cakrawala.data.response.UploadTextPdfResponse
 import com.bangkit.cakrawala.data.response.UploadTextResponse
@@ -52,9 +55,23 @@ interface ApiService {
         @Query("itemsPerPage") size: Int? = null,
         ) : HistoryResponse
 
-    @GET("history/{id}")
+    @DELETE("history/{id}")
     fun deleteHistory(
         @Path("id") userId: String
     ) : Call<HistoryResponse>
+
+    @GET("premium")
+    fun getPremiumList(): Call<PremiumResponse>
+
+    @POST("premium/{id}")
+    fun buyPremium(
+        @Path("id") premiumId: Int
+    ) : Call<BuyPremiumResponse>
+
+    @GET("transactions")
+    suspend fun getTransactionPaging(
+        @Query("page") page: Int? = null,
+        @Query("itemsPerPage") size: Int? = null,
+    ) : TransactionHistoryResponse
 
 }

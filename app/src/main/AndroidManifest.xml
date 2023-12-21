@@ -26,15 +26,23 @@
         tools:targetApi="31">
         <activity
             android:name=".ui.payment.PaymentActivity"
-            android:theme="@style/Theme.MidtransSDKSampleApp"
             android:exported="false" />
         <activity
             android:name=".ui.forgotpassword.ForgotPasswordActivity"
             android:exported="false" />
         <activity
             android:name=".ui.home.HomeActivity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustNothing" />
+            android:exported="true"
+            android:windowSoftInputMode="adjustNothing">
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:scheme="https"
+                    android:host="cakrawala-api-v1-duh3wv5r2q-uc.a.run.app"
+                    android:path="/payment-success"/>
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ui.register.RegisterActivity"
             android:exported="false" />

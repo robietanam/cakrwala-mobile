@@ -18,6 +18,7 @@ import com.bangkit.cakrawala.ui.common.TokenViewModel
 import com.bangkit.cakrawala.ui.history.HistoryViewModel
 import com.bangkit.cakrawala.ui.login.LoginActivity
 import com.bangkit.cakrawala.ui.payment.PaymentActivity
+import com.bangkit.cakrawala.ui.payment.PaymentFragment
 
 class SettingsFragment : Fragment() {
 
@@ -42,6 +43,8 @@ class SettingsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this)[SettingsViewModel::class.java]
 
+        val paymentFragment = PaymentFragment()
+
         tokenViewModel = ViewModelProvider(this, AuthViewModelFactory.getInstance(requireContext()))[TokenViewModel::class.java]
         tokenViewModel.getToken().observe(viewLifecycleOwner){
             if (!it.token.isNullOrEmpty()){
@@ -55,8 +58,12 @@ class SettingsFragment : Fragment() {
         }
 
         binding.btnPayment.setOnClickListener {
-            val intent = Intent(requireContext(), PaymentActivity::class.java)
-            startActivity(intent)
+            parentFragmentManager
+            .beginTransaction()
+            .setReorderingAllowed(true)
+            .replace(R.id.home_fragment_container_view, paymentFragment)
+            .addToBackStack(null)
+            .commit()
         }
 
         val historyViewModel = ViewModelProvider(this, HistoryViewModelFactory.getInstance(requireContext()))[HistoryViewModel::class.java]

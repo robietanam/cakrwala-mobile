@@ -1,5 +1,6 @@
 package com.bangkit.cakrawala.utils
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
 import androidx.datastore.preferences.core.stringPreferencesKey
@@ -29,5 +30,28 @@ class SendCookiesInterceptor(private val context: Context) : Interceptor {
         builder.addHeader("Cookie", "jwt=${token.token}")
 
         return chain.proceed(builder.build())
+    }
+}
+
+class SaveReceivedCookiesInterceptor(private val context: Context) : Interceptor {
+
+    @JvmField
+    val setCookieHeader = "Set-Cookie"
+
+    override fun intercept(chain: Interceptor.Chain): Response {
+        val originalResponse = chain.proceed(chain.request())
+
+        if (originalResponse.headers(setCookieHeader).isNotEmpty()) {
+
+            runBlocking {
+                val pref = Injection.provideAuthPreferences(context)
+                originalResponse.headers(setCookieHeader).forEach {
+                    pref.updateToken(it)
+                }
+                pref.getCredential().first()
+            }
+        }
+
+        return originalResponse
     }
 }

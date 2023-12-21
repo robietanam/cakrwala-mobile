@@ -49,7 +49,6 @@ class MenuGridAdapter(
         holder.courseIV.setImageResource(courseList[position].menuImage)
         holder.itemView.setOnClickListener {
             onItemClickCallback.onItemClicked(courseList[position])
-            Toast.makeText(holder.itemView.context, "Halo ${courseList[position].menuTitle}", Toast.LENGTH_SHORT).show()
         }
     }
 

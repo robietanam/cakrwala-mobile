@@ -6,10 +6,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.commit
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bangkit.cakrawala.R
 import com.bangkit.cakrawala.databinding.FragmentHomeBinding
+import com.bangkit.cakrawala.ui.AuthViewModelFactory
+import com.bangkit.cakrawala.ui.common.TokenViewModel
 import com.bangkit.cakrawala.ui.detection.audio.AudioDetectionFragment
 import com.bangkit.cakrawala.ui.detection.image.ImageDetectionFragment
 import com.bangkit.cakrawala.ui.history.HistoryFragment
@@ -59,11 +62,16 @@ class HomeFragment : Fragment() {
         menuItemRv.adapter = menuRVAdapter
 
         menuList.add(MenuRvModal(menuTitle = "Text", menuImage = R.drawable.format_quote, menuFragment = TextDetectionFragment.newInstance("GODDANG")))
-        menuList.add(MenuRvModal(menuTitle = "Gambar", menuImage = R.drawable.no_image,menuFragment = AudioDetectionFragment()))
-        menuList.add(MenuRvModal(menuTitle = "Audio", menuImage = R.drawable.mic, menuFragment = ImageDetectionFragment()))
+        menuList.add(MenuRvModal(menuTitle = "Gambar", menuImage = R.drawable.no_image,menuFragment = ImageDetectionFragment()))
+        menuList.add(MenuRvModal(menuTitle = "Audio", menuImage = R.drawable.mic, menuFragment = AudioDetectionFragment()))
 
         menuRVAdapter.notifyDataSetChanged()
 
+        val tokenViewModel = ViewModelProvider(this, AuthViewModelFactory.getInstance(requireContext()))[TokenViewModel::class.java]
+
+        tokenViewModel.getToken().observe(viewLifecycleOwner){
+            binding.tvNama.text = it.userName
+        }
 
         historyFragment = HistoryFragment()
         menuRVAdapter.setOnItemClickCallback(object : MenuGridAdapter.OnItemClickCallback {

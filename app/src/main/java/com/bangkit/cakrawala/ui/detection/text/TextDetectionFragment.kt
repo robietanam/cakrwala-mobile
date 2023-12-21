@@ -21,9 +21,12 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bangkit.cakrawala.R
+import com.bangkit.cakrawala.data.response.Auth
 import com.bangkit.cakrawala.databinding.FragmentTextDetectionBinding
+import com.bangkit.cakrawala.ui.AuthViewModelFactory
 import com.bangkit.cakrawala.ui.HistoryViewModelFactory
 import com.bangkit.cakrawala.ui.TextDetectionViewModelFactory
+import com.bangkit.cakrawala.ui.common.TokenViewModel
 import com.bangkit.cakrawala.ui.history.HistoryViewModel
 import com.bangkit.cakrawala.utils.getImageUriTemp
 import com.bangkit.cakrawala.utils.uriToFile
@@ -73,6 +76,14 @@ class TextDetectionFragment : Fragment() {
         // TODO: Use the ViewModel
 
         viewModel = ViewModelProvider(this, TextDetectionViewModelFactory.getInstance(requireContext()))[TextDetectionViewModel::class.java]
+        val tokenViewModel = ViewModelProvider(this, AuthViewModelFactory.getInstance(requireContext()))[TokenViewModel::class.java]
+
+        tokenViewModel.getToken().observe(viewLifecycleOwner){
+
+            if (it.premium == 1){
+                binding.textInputLayout.counterMaxLength = 5000
+            }
+        }
 
         updateVisibility(R.id.rb_text)
 
@@ -101,8 +112,10 @@ class TextDetectionFragment : Fragment() {
         }
 
         viewModel.responseText.observe(viewLifecycleOwner){
-            Toast.makeText(requireContext(), it.data?.extractedText.toString(), Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Success, checking text", Toast.LENGTH_SHORT).show()
+            parentFragmentManager.popBackStack()
         }
+
 
     }
 

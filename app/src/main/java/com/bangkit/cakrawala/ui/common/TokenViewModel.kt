@@ -16,9 +16,15 @@ class TokenViewModel(private val pref: AuthPreferences) : ViewModel() {
         return pref.getCredential().asLiveData()
     }
 
+    fun updateTokenToPremium(token: String) {
+        viewModelScope.launch {
+            pref.updateToken(token)
+        }
+    }
+
     fun saveToken(auth: Auth) {
         viewModelScope.launch {
-            pref.saveCredential(Auth(token = auth.token, userName = auth.userName, userId = auth.userId))
+            pref.saveCredential(Auth(token = auth.token, userName = auth.userName, userId = auth.userId, premium = auth.premium))
         }
     }
 
